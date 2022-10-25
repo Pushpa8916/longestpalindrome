@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+class ListNode{
+   public:
+   int val;
+   ListNode *next;
+   ListNode(int data){
+      val = data;
+      next = NULL;
+}
+};
+ListNode *make_list(vector<int> v){
+   ListNode *head = new ListNode(v[0]);
+   for(int i = 1; i<v.size(); i++){
+      ListNode *ptr = head;
+while(ptr->next != NULL){
+         ptr = ptr->next;
+      }
+      ptr->next = new ListNode(v[i]);
+   }
+   return head;
+}
+class Solution {
+   public:
+int numComponents(ListNode* head, vector<int>& G) {
+      int ret = 0;
+      set < int > s;
+      for(int i = 0; i < G.size(); i++)s.insert(G[i]);
+      bool flag = false;
+      while(head){
+         int x = head->val;
+         if(s.count(x)){
+            if(!flag) ret++;
+flag = true;
+         }else flag = false;
+         head = head->next;
+      }
+      return ret;
+   }
+};
+main(){
+   vector<int> v1 = {0,1,2,3};
+vector<int> v2 = {0,1,3};
+   ListNode *h1 = make_list(v1);
+   Solution ob;
+   cout << (ob.numComponents(h1, v2));
+}
+
